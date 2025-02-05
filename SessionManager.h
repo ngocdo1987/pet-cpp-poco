@@ -4,12 +4,14 @@
 
 #include "Poco/Net/HTTPCookie.h"
 #include "Poco/JSON/Object.h"
+#include "Poco/JSON/Parser.h"
 #include "Poco/FileStream.h"
 #include "Poco/UUIDGenerator.h"
 #include "Poco/Path.h"
 #include "Poco/File.h"
 #include <string>
 #include <map>
+#include <fstream>
 
 class SessionManager {
 public:

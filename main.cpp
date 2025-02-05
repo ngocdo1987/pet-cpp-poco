@@ -5,6 +5,7 @@
 #include "Poco/Net/HTTPServerParams.h"
 #include "Poco/Net/ServerSocket.h"
 #include "Controller.h"
+#include "SessionManager.h"
 
 class RequestHandlerFactory : public Poco::Net::HTTPRequestHandlerFactory {
 public:
@@ -14,6 +15,9 @@ public:
 };
 
 int main(int argc, char** argv) {
+    // Initialize session manager
+    SessionManager::initialize();
+
     Poco::Net::ServerSocket socket(1240);
     Poco::Net::HTTPServer server(new RequestHandlerFactory(), socket, new Poco::Net::HTTPServerParams);
 
