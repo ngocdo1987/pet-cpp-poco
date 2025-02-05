@@ -41,16 +41,20 @@ public:
         // Save updated session data
         SessionManager::saveSession(sessionId, sessionData);
 
+        // Prepare data for the view
+        std::map<std::string, std::string> viewData;
+        viewData["session_id"] = sessionId;
+        viewData["visit_count"] = std::to_string(sessionData.getValue<int>("visit_count"));
+
+        // Render the view using Inja
+        std::string html = View::render("session_template.html", viewData);
+
+        // Send the HTML response
         response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
         response.setContentType("text/html");
 
         std::ostream& ostr = response.send();
-        //ostr << View::render(items);
-	ostr << "<html><body>";
-        ostr << "<h1>Session Data</h1>";
-        ostr << "<p>Session ID: " << sessionId << "</p>";
-        ostr << "<p>Visit Count: " << sessionData.getValue<int>("visit_count") << "</p>";
-        ostr << "</body></html>";
+        ostr << html;
     }
 };
 

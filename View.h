@@ -2,19 +2,21 @@
 #ifndef VIEW_H
 #define VIEW_H
 
+#include <inja/inja.hpp>
 #include <string>
 #include <vector>
 #include "Model.h"
 
 class View {
 public:
-    static std::string render(const std::vector<Model::Item>& items) {
-        std::string html = "<html><body><h1>Items</h1><ul>";
-        for (const auto& item : items) {
-            html += "<li>" + std::to_string(item.id) + ": " + item.name + "</li>";
-        }
-        html += "</ul></body></html>";
-        return html;
+    // Render the template with given data using Inja
+    static std::string render(const std::string& templateName, const std::map<std::string, std::string>& data) {
+        // Load the template file
+        std::string templatePath = "templates/" + templateName;
+        inja::Environment env;
+
+        // Render the template with the provided data
+        return env.render_file(templatePath, data);
     }
 };
 
